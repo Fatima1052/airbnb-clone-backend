@@ -11,7 +11,7 @@ const mongoose = require("mongoose");
 
 const connectDB = require("../src/config/db");
 const Listing = require("../src/models/Listing");
-const { HOMES, EXPERIENCES, SERVICES, CITY_COORDS } = require("./data");
+const { HOMES, EXPERIENCES, SERVICES, CITY_COORDS, CITY_COUNTRY } = require("./data");
 
 const HOST_NAMES = ["Hassan", "Ali", "Ayesha", "Sarah", "Usman", "Emma"];
 const AMENITIES = [
@@ -48,7 +48,7 @@ function toHomeDoc(home) {
     guestFavorite: home.guestFavorite,
     location: {
       city: home.city,
-      country: "Pakistan",
+      country: CITY_COUNTRY[home.city] || "",
       coordinates: CITY_COORDS[home.city],
     },
     images: placeholderImages(`home-${home.id}`, 6),

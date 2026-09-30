@@ -110,6 +110,19 @@ const CITY_COORDS = {
   Baku: [49.8671, 40.4093],
 };
 
+const CITY_COUNTRY = {
+  Islamabad: "Pakistan",
+  Lahore: "Pakistan",
+  Murree: "Pakistan",
+  "Nathia Gali": "Pakistan",
+  Karachi: "Pakistan",
+  Faisalabad: "Pakistan",
+  Dubai: "United Arab Emirates",
+  Bhurban: "Pakistan",
+  Istanbul: "Turkey",
+  Baku: "Azerbaijan",
+};
+
 const EXPERIENCES = [
   { id: 1, title: "Carve marble with a third-generation sculptor", city: "Athens", country: "Greece", price: 50, rating: 4.9 },
   { id: 2, title: "Art Walking Tour in San Miguel de Allende", city: "San Miguel de Allende", country: "Mexico", price: 39, rating: 4.8 },
@@ -140,4 +153,4 @@ const SERVICES = [
   { id: 12, title: "Los Angeles Editorial Lifestyle Portraits & Events", city: "Los Angeles", country: "USA", price: 200, rating: 5.0, unit: "group" },
 ];
 
-module.exports = { HOMES, EXPERIENCES, SERVICES, CITY_COORDS };
+module.exports = { HOMES, EXPERIENCES, SERVICES, CITY_COORDS, CITY_COUNTRY };
