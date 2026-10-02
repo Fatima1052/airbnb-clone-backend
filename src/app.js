@@ -1,3 +1,5 @@
+const path = require("path");
+
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -30,6 +32,19 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.get("/api/health", (req, res) => res.json({ ok: true }));
+
+// Seeded listings' photos (see seed/data.js). Served from the backend itself
+// so it doesn't depend on the frontend's dev server being up — Cross-Origin-Resource-Policy
+// is relaxed just for this route so <img> tags on a different origin (the
+// frontend, port 3000) can load them.
+app.use(
+  "/images",
+  (req, res, next) => {
+    res.set("Cross-Origin-Resource-Policy", "cross-origin");
+    next();
+  },
+  express.static(path.join(__dirname, "..", "public", "images"))
+);
 
 app.use("/api/listings", listingsRouter);
 app.use("/api/bookings", bookingsRouter);

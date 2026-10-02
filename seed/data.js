@@ -153,4 +153,65 @@ const SERVICES = [
   { id: 12, title: "Los Angeles Editorial Lifestyle Portraits & Events", city: "Los Angeles", country: "USA", price: 200, rating: 5.0, unit: "group" },
 ];
 
-module.exports = { HOMES, EXPERIENCES, SERVICES, CITY_COORDS, CITY_COUNTRY };
+// Real photos for each category/experience/service, copied from the frontend's
+// src/assests/ into public/images/ and served by this backend at /images/<file>
+// (see src/app.js). Six per home category, matching the original frontend's
+// imageSets order in src/data/listingsData.js, so a listing's photos at least
+// match its city, even though (like the original app) several listings in the
+// same city share the same six photos.
+const CATEGORY_IMAGES = {
+  popularHomes: ["house1.avif", "house2.avif", "house3.avif", "house4.avif", "house5.avif", "house6.avif"],
+  greatHotels: ["hotel1.avif", "hotel2.avif", "hotel3.avif", "hotel4.avif", "hotel5.avif", "hotel6.avif"],
+  weekendHomes: ["weekend1.avif", "weekend2.avif", "weekend3.avif", "weekend4.avif", "weekend5.avif", "weekend6.avif"],
+  stayInMurree: ["muree1.avif", "muree2.avif", "muree3.avif", "muree4.avif", "muree5.avif", "muree6.avif"],
+  nathiaGaliHomes: ["nathia1.avif", "nathia2.avif", "nathia3.avif", "nathia4.avif", "nathia5.avif", "nathia6.avif"],
+  karachiHomes: ["karachi1.avif", "karachi2.avif", "karachi3.avif", "karachi4.avif", "karachi5.avif", "karachi6.avif"],
+  faisalabadHomes: ["faisalabad1.avif", "faisalabad2.avif", "faisalabad3.avif", "faisalabad4.avif", "faisalabad5.avif", "faisalabad6.avif"],
+  dubaiPlaces: ["dubai1.avif", "dubai2.avif", "dubai3.avif", "dubai4.avif", "dubai5.avif", "dubai6.avif"],
+  bhurbanHomes: ["bhurbun1.avif", "bhurbun2.avif", "bhurbun3.avif", "bhurbun4.avif", "bhurbun5.avif", "bhurbun6.avif"],
+  istanbulHomes: ["istanbul1.avif", "istanbul2.avif", "istanbul3.avif", "istanbul4.avif", "istanbul5.avif", "istanbul6.avif"],
+  bakuHomes: ["baku1.avif", "baku2.avif", "baku3.avif", "baku4.avif", "baku5.avif", "baku6.avif"],
+};
+
+// Experiences 1-6 are the original "Airbnb Originals", 7-12 are Kuala Lumpur.
+const EXPERIENCE_IMAGES = {
+  1: "experience1.avif",
+  2: "experience2.avif",
+  3: "experience3.avif",
+  4: "experience4.avif",
+  5: "experience5.avif",
+  6: "experience6.avif",
+  7: "kualalumpur1.avif",
+  8: "kualalumpur2.avif",
+  9: "kualalumpur3.avif",
+  10: "kualalumpur4.avif",
+  11: "kualalumpur5.avif",
+  12: "kualalumpur6.webp",
+};
+
+// Services 1-6 are London, 7-12 are Los Angeles.
+const SERVICE_IMAGES = {
+  1: "service1.avif",
+  2: "service2.avif",
+  3: "service3.avif",
+  4: "service4.avif",
+  5: "service5.avif",
+  6: "service6.avif",
+  7: "losangeles1.avif",
+  8: "losangeles2.avif",
+  9: "losangeles3.avif",
+  10: "losangeles4.avif",
+  11: "losangeles5.avif",
+  12: "losangeles6.avif",
+};
+
+module.exports = {
+  HOMES,
+  EXPERIENCES,
+  SERVICES,
+  CITY_COORDS,
+  CITY_COUNTRY,
+  CATEGORY_IMAGES,
+  EXPERIENCE_IMAGES,
+  SERVICE_IMAGES,
+};

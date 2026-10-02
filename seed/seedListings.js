@@ -11,7 +11,19 @@ const mongoose = require("mongoose");
 
 const connectDB = require("../src/config/db");
 const Listing = require("../src/models/Listing");
-const { HOMES, EXPERIENCES, SERVICES, CITY_COORDS, CITY_COUNTRY } = require("./data");
+const {
+  HOMES,
+  EXPERIENCES,
+  SERVICES,
+  CITY_COORDS,
+  CITY_COUNTRY,
+  CATEGORY_IMAGES,
+  EXPERIENCE_IMAGES,
+  SERVICE_IMAGES,
+} = require("./data");
+
+// This backend serves the actual photo files at /images/<file> (see src/app.js).
+const IMAGES_BASE = `http://localhost:${process.env.PORT || 5000}/images`;
 
 const HOST_NAMES = ["Hassan", "Ali", "Ayesha", "Sarah", "Usman", "Emma"];
 const AMENITIES = [
@@ -26,12 +38,6 @@ const AMENITIES = [
   "24/7 elevator",
   "UPS backup",
 ];
-
-// Deterministic placeholder photos (no real hosted images yet) — replace with
-// Cloudinary/S3 URLs once uploads are wired up.
-function placeholderImages(seed, count = 5) {
-  return Array.from({ length: count }, (_, index) => `https://picsum.photos/seed/${seed}-${index}/1200/800`);
-}
 
 function toHomeDoc(home) {
   const isPrivateRoom = home.title.toLowerCase().includes("room");
@@ -51,7 +57,7 @@ function toHomeDoc(home) {
       country: CITY_COUNTRY[home.city] || "",
       coordinates: CITY_COORDS[home.city],
     },
-    images: placeholderImages(`home-${home.id}`, 6),
+    images: (CATEGORY_IMAGES[home.category] || []).map((file) => `${IMAGES_BASE}/${file}`),
     placeType: isPrivateRoom ? "Private room" : "Entire home",
     guests: 4,
     bedrooms: 2,
@@ -73,6 +79,8 @@ function toHomeDoc(home) {
 }
 
 function toExperienceOrServiceDoc(kind, item) {
+  const file = (kind === "experience" ? EXPERIENCE_IMAGES : SERVICE_IMAGES)[item.id];
+
   return {
     legacyId: item.id,
     kind,
@@ -82,7 +90,7 @@ function toExperienceOrServiceDoc(kind, item) {
     priceUnit: item.unit || "guest",
     rating: item.rating,
     location: { city: item.city, country: item.country },
-    images: placeholderImages(`${kind}-${item.id}`, 5),
+    images: file ? [`${IMAGES_BASE}/${file}`] : [],
     description:
       kind === "experience"
         ? "A hands-on activity led by a local host — small groups, all skill levels welcome."
