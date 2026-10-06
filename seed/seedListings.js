@@ -39,8 +39,19 @@ const AMENITIES = [
   "UPS backup",
 ];
 
+// Each category only has 6 real photos shared by its 6 listings. Rotating
+// which one comes first per listing at least gives each one a different
+// cover photo on the home page cards, instead of all 6 showing the same one.
+// The listing detail page still shows all 6 photos either way.
+function rotateImages(images, offset) {
+  if (images.length === 0) return images;
+  const shift = offset % images.length;
+  return [...images.slice(shift), ...images.slice(0, shift)];
+}
+
 function toHomeDoc(home) {
   const isPrivateRoom = home.title.toLowerCase().includes("room");
+  const positionInCategory = (home.id - 1) % 6;
 
   return {
     legacyId: home.id,
@@ -57,7 +68,9 @@ function toHomeDoc(home) {
       country: CITY_COUNTRY[home.city] || "",
       coordinates: CITY_COORDS[home.city],
     },
-    images: (CATEGORY_IMAGES[home.category] || []).map((file) => `${IMAGES_BASE}/${file}`),
+    images: rotateImages(CATEGORY_IMAGES[home.category] || [], positionInCategory).map(
+      (file) => `${IMAGES_BASE}/${file}`
+    ),
     placeType: isPrivateRoom ? "Private room" : "Entire home",
     guests: 4,
     bedrooms: 2,
