@@ -23,7 +23,9 @@ const {
 } = require("./data");
 
 // This backend serves the actual photo files at /images/<file> (see src/app.js).
-const IMAGES_BASE = `http://localhost:${process.env.PORT || 5000}/images`;
+// Set IMAGES_BASE (e.g. https://<your-backend>.vercel.app/images) when seeding a deployed database.
+const IMAGES_BASE =
+  process.env.IMAGES_BASE || `http://localhost:${process.env.PORT || 5000}/images`;
 
 const HOST_NAMES = ["Hassan", "Ali", "Ayesha", "Sarah", "Usman", "Emma"];
 const AMENITIES = [
