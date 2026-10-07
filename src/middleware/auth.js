@@ -40,14 +40,20 @@ async function requireAuth(req, res, next) {
       return res.status(401).json({ message: "Missing Authorization: Bearer <token> header" });
     }
 
-    ensureFirebaseInitialized();
+    // A missing/broken server config is our problem, not the user's token.
+    try {
+      ensureFirebaseInitialized();
+    } catch (configError) {
+      console.error("Firebase Admin config error:", configError.message);
+      return res.status(500).json({ message: "Server auth is not configured (Firebase env vars missing on the backend)" });
+    }
 
     const decoded = await admin.auth().verifyIdToken(token);
     req.user = { uid: decoded.uid, email: decoded.email };
 
     next();
   } catch (error) {
-    console.error("Auth error:", error.message);
+    console.error("Auth error:", error.code, error.message);
     res.status(401).json({ message: "Invalid or expired token" });
   }
 }
